@@ -6,12 +6,12 @@
   - `mix archive.install hex gen_medic`
   - `mix gen.medic`
 - Added db scripts in `bin/dev/db-*`
-- Added `credo`, `dialyxir`, and `mix_audit`
+- Added `credo`, `dialyxir`, `mix_audit`, `mix_test_interactive`, `moar`, `pages`, `schema_assertions`
 - Added `.envrc` and `.local/`
 - Added `.tool-versions`
+- Added `.formatter.exs`
+- Cleaned up `mix.exs`
 - `dev.exs` and `test.exs` try to get the postgres port from `PGPORT` env var
-- Add `.formatter.exs`
-- Clean up `mix.exs`
 
 ## v0.1.0
 
