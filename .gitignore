@@ -35,3 +35,8 @@ seed-*.tar
 npm-debug.log
 /assets/node_modules/
 
+
+.local
+.medic/skipped
+.medic/.doctor.out
+/priv/postgres
