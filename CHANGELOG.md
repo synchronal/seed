@@ -12,6 +12,7 @@
 - Added `.formatter.exs`
 - Cleaned up `mix.exs`
 - `dev.exs` and `test.exs` try to get the postgres port from `PGPORT` env var
+- Renamed `Seed` and `SeedWeb` modules to `Core` and `Web`
 
 ## v0.1.0
 
