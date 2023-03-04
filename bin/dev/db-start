@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+# Starts postgres with certain assumptions:
+#   * assumes postgres is installed via asdf
+#   * assumes you want the database to be stored in ./priv/postgres/data/
+#   * assumes you want the database log to be stored in ./priv/postgres/logfile
+#
+# This may not be the script for you if you like to run postgres some other way.
+
+source ".medic/_support/cecho.sh"
+source ".medic/_support/step.sh"
+source ".medic/_support/check.sh"
+
+set -e
+
+if [ -z "${PGPORT}" ]; then
+  cecho --cyan "${0}:" --bright-bold-red "PGPORT" --red "is not set"
+  cecho --cyan "${0}:" --cyan "Add" --bright-bold-yellow "export PGPORT=<port>" --cyan "to" --bright-bold-yellow ".local/envrc" \
+    --cyan "(i.e.," --bright-bold-yellow "export PGPORT=54301" --cyan ")"
+  cecho --cyan "${0}:" --cyan "Run" --bright-bold-yellow "bin/dev/db-list" --cyan "to see ports already in use"
+  exit 1
+fi
+
+if eval "asdf plugin-list | grep postgres > /dev/null 2>&1"; then
+  pgdir="$(pwd)/priv/postgres"
+  postgres_path="$(asdf where postgres)"
+  log_path="${pgdir}/logfile"
+  datadir="${pgdir}/data"
+  pgport=${PGPORT}
+  mkdir -p ${datadir}
+else
+  cecho --cyan "${0}:" --bright-bold-red "asdf postgres plugin not found"
+  exit 1
+fi
+
+if [[ ! -f ${datadir}/PG_VERSION ]]; then
+  cecho --cyan "${0}:" --bright-bold-red "${datadir}" --red "does not seem to be a postgres data directory"
+  cecho --cyan "Possible rememdy:" --bright-bold-yellow "pg_ctl -D ${datadir} initdb" --green "(It's in the clipboard)"
+  localcopy "pg_ctl -D ${datadir} initdb"
+  exit 1
+fi
+
+step "Starting postgres on port ${pgport}" "${postgres_path}/bin/pg_ctl -D ${datadir} -l ${log_path} -o '-p ${pgport}' start"
+echo ""

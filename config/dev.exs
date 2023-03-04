@@ -2,13 +2,14 @@ import Config
 
 # Configure your database
 config :seed, Core.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
   database: "seed_dev",
-  stacktrace: true,
+  hostname: "localhost",
+  password: "postgres",
+  pool_size: 10,
+  port: String.to_integer(System.get_env("PGPORT", "5432")),
   show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+  stacktrace: true,
+  username: "postgres"
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
