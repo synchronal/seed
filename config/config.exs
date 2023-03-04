@@ -13,10 +13,10 @@ config :seed,
   generators: [binary_id: true]
 
 # Configures the endpoint
-config :seed, CoreWeb.Endpoint,
+config :seed, Web.Endpoint,
   url: [host: "localhost"],
   render_errors: [
-    formats: [html: CoreWeb.ErrorHTML, json: CoreWeb.ErrorJSON],
+    formats: [html: Web.ErrorHTML, json: Web.ErrorJSON],
     layout: false
   ],
   pubsub_server: Core.PubSub,

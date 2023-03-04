@@ -1,11 +1,11 @@
-defmodule CoreWeb.Router do
-  use CoreWeb, :router
+defmodule Web.Router do
+  use Web, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
-    plug :put_root_layout, {CoreWeb.Layouts, :root}
+    plug :put_root_layout, {Web.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
@@ -14,14 +14,14 @@ defmodule CoreWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", CoreWeb do
+  scope "/", Web do
     pipe_through :browser
 
     get "/", PageController, :home
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", CoreWeb do
+  # scope "/api", Web do
   #   pipe_through :api
   # end
 
@@ -37,7 +37,7 @@ defmodule CoreWeb.Router do
     scope "/dev" do
       pipe_through :browser
 
-      live_dashboard "/dashboard", metrics: CoreWeb.Telemetry
+      live_dashboard "/dashboard", metrics: Web.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
   end

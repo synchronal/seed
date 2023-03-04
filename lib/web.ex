@@ -1,12 +1,12 @@
-defmodule CoreWeb do
+defmodule Web do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, components, channels, and so on.
 
   This can be used in your application as:
 
-      use CoreWeb, :controller
-      use CoreWeb, :html
+      use Web, :controller
+      use Web, :html
 
   The definitions below will be executed for every controller,
   component, etc, so keep them short and clean, focused
@@ -40,10 +40,10 @@ defmodule CoreWeb do
     quote do
       use Phoenix.Controller,
         formats: [:html, :json],
-        layouts: [html: CoreWeb.Layouts]
+        layouts: [html: Web.Layouts]
 
       import Plug.Conn
-      import CoreWeb.Gettext
+      import Web.Gettext
 
       unquote(verified_routes())
     end
@@ -52,7 +52,7 @@ defmodule CoreWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {CoreWeb.Layouts, :app}
+        layout: {Web.Layouts, :app}
 
       unquote(html_helpers())
     end
@@ -84,8 +84,8 @@ defmodule CoreWeb do
       # HTML escaping functionality
       import Phoenix.HTML
       # Core UI components and translation
-      import CoreWeb.CoreComponents
-      import CoreWeb.Gettext
+      import Web.CoreComponents
+      import Web.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
@@ -98,9 +98,9 @@ defmodule CoreWeb do
   def verified_routes do
     quote do
       use Phoenix.VerifiedRoutes,
-        endpoint: CoreWeb.Endpoint,
-        router: CoreWeb.Router,
-        statics: CoreWeb.static_paths()
+        endpoint: Web.Endpoint,
+        router: Web.Router,
+        statics: Web.static_paths()
     end
   end
 

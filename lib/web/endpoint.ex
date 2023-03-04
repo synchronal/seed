@@ -1,4 +1,4 @@
-defmodule CoreWeb.Endpoint do
+defmodule Web.Endpoint do
   use Phoenix.Endpoint, otp_app: :seed
 
   # The session will be stored in the cookie and signed,
@@ -21,7 +21,7 @@ defmodule CoreWeb.Endpoint do
     at: "/",
     from: :seed,
     gzip: false,
-    only: CoreWeb.static_paths()
+    only: Web.static_paths()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -47,5 +47,5 @@ defmodule CoreWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug CoreWeb.Router
+  plug Web.Router
 end
