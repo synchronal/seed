@@ -9,7 +9,7 @@ defmodule Core.Application do
   def start(_type, _args) do
     children = [
       # Start the Telemetry supervisor
-      CoreWeb.Telemetry,
+      Web.Telemetry,
       # Start the Ecto repository
       Core.Repo,
       # Start the PubSub system
@@ -17,7 +17,7 @@ defmodule Core.Application do
       # Start Finch
       {Finch, name: Core.Finch},
       # Start the Endpoint (http/https)
-      CoreWeb.Endpoint
+      Web.Endpoint
       # Start a worker by calling: Core.Worker.start_link(arg)
       # {Core.Worker, arg}
     ]
@@ -32,7 +32,7 @@ defmodule Core.Application do
   # whenever the application is updated.
   @impl true
   def config_change(changed, _new, removed) do
-    CoreWeb.Endpoint.config_change(changed, removed)
+    Web.Endpoint.config_change(changed, removed)
     :ok
   end
 end

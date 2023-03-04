@@ -16,7 +16,7 @@ config :seed, Core.Repo,
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :seed, CoreWeb.Endpoint,
+config :seed, Web.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "nhi83GrOMRlNzfDIVdW3kuD+OxHPVLD6tr5kgPL6VoYW9+nsxohacIkqP1Yg2ZNA",
   server: false
