@@ -10,6 +10,8 @@
 - Added `.envrc` and `.local/`
 - Added `.tool-versions`
 - `dev.exs` and `test.exs` try to get the postgres port from `PGPORT` env var
+- Add `.formatter.exs`
+- Clean up `mix.exs`
 
 ## v0.1.0
 
