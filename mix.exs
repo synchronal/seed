@@ -48,6 +48,7 @@ defmodule Core.MixProject do
       {:jason, "~> 1.2"},
       {:markdown_formatter, "~> 0.1", only: [:dev, :test], runtime: false},
       {:mix_audit, "~> 2.1", only: [:dev], runtime: false},
+      {:mix_test_interactive, "~> 1.2", only: :dev, runtime: false},
       {:moar, "~> 1.28"},
       {:pages, "~> 0.10", only: :test},
       {:phoenix, "~> 1.7.1"},
