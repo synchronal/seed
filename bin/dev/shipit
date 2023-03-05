@@ -12,6 +12,7 @@ bin/dev/update
 bin/dev/test
 
 step "Pushing" "git push origin HEAD"
+step "Pushing all tags" "git push origin --tags"
 
 set +e
 origin=$(git remote get-url origin 2>&1)
