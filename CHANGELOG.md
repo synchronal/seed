@@ -14,6 +14,8 @@
 - `dev.exs` and `test.exs` try to get the postgres port from `PGPORT` env var
 - Renamed `Seed` and `SeedWeb` modules to `Core` and `Web`
 - Added `bin/dev/deps`
+- Split `aliases` and `deps` functions in `mix.exs` into `:seed` and `:app` versions to hopefully reduce future
+  merge conflicts.
 
 ## v0.1.0
 

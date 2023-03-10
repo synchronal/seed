@@ -5,9 +5,9 @@ defmodule Core.MixProject do
 
   def project do
     [
-      aliases: aliases(),
+      aliases: aliases(:app) ++ aliases(:seed),
       app: :seed,
-      deps: deps(),
+      deps: deps(:app) ++ deps(:seed),
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -24,7 +24,11 @@ defmodule Core.MixProject do
 
   # # #
 
-  defp aliases do
+  defp aliases(:app) do
+    []
+  end
+
+  defp aliases(:seed) do
     [
       setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
@@ -36,7 +40,11 @@ defmodule Core.MixProject do
     ]
   end
 
-  defp deps do
+  defp deps(:app) do
+    []
+  end
+
+  defp deps(:seed) do
     [
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
