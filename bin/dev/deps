@@ -37,8 +37,10 @@ if [ -z "${deps}" ] ; then
   
   echo ""
   cecho --bright-bold-red "USAGE:"
-  cecho --white "  list outdated deps:     " --yellow "${0}"
-  cecho --white "  update one or more deps:" --yellow "${0} <package-name> ..."
+  cecho --white "  list outdated deps:             run" --yellow "${0}"
+  cecho --white "  update one or more Elixir deps: run" --yellow "${0} <package-name> ..."
+  cecho --white "  update an ASDF tool:            edit" --yellow ".tool-versions" --white "and run" --yellow "asdf install"
+  
   exit 0
 fi
 
