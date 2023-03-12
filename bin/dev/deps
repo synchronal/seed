@@ -21,7 +21,7 @@ check_asdf() {
   
   while read line; do
     set $line
-    latest="$(asdf list-all ${1} | grep -e '^\d.*' | tail -1)"
+    latest="$(asdf list-all ${1} | grep -e '^\d.*' | grep -v '\-rc' | tail -1)"
     
     if [[ $2 == $latest ]]; then
       cecho --bright-bold-white "${1}" --white "${2}" --green "${latest} (Up-to-date)"
