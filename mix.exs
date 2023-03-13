@@ -34,9 +34,9 @@ defmodule Core.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
-      "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind default", "esbuild default"],
-      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
+      "assets.setup": ["esbuild.install --if-missing"],
+      "assets.build": ["esbuild default"],
+      "assets.deploy": ["esbuild default --minify", "phx.digest"]
     ]
   end
 
@@ -69,7 +69,6 @@ defmodule Core.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:schema_assertions, "~> 0.1", only: [:dev, :test]},
       {:swoosh, "~> 1.3"},
-      {:tailwind, "~> 0.1.8", runtime: Mix.env() == :dev},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"}
     ]

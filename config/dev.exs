@@ -26,8 +26,7 @@ config :seed, Web.Endpoint,
   debug_errors: true,
   secret_key_base: "GngM/lw96a6R2Pr68sczwCo0R/fgHZeNFVh/b6cVE1Lq2wO+nByrb65thS7ITz9g",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
   ]
 
 # ## SSL Support

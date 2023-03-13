@@ -16,6 +16,7 @@
 - Added `bin/dev/deps`
 - Split `aliases` and `deps` functions in `mix.exs` into `:seed` and `:app` versions to hopefully reduce future
   merge conflicts.
+- Removed tailwind.
 
 ## v0.1.0
 
