@@ -39,4 +39,5 @@ npm-debug.log
 .local
 .medic/skipped
 .medic/.doctor.out
+/assets/.DS_Store
 /priv/postgres
