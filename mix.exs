@@ -36,7 +36,7 @@ defmodule Core.MixProject do
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["esbuild.install --if-missing"],
       "assets.build": ["esbuild default"],
-      "assets.deploy": ["esbuild default --minify", "phx.digest"]
+      "assets.deploy": ["esbuild default --minify", "sass default --no-source-map --style=compressed", "phx.digest"]
     ]
   end
 
@@ -47,6 +47,7 @@ defmodule Core.MixProject do
   defp deps(:seed) do
     [
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+      {:dart_sass, "~> 0.5"},
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
       {:ecto_sql, "~> 3.6"},
       {:esbuild, "~> 0.5", runtime: Mix.env() == :dev},

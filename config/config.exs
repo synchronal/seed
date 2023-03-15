@@ -7,6 +7,13 @@
 # General application configuration
 import Config
 
+config :dart_sass,
+  version: "1.55.0",
+  default: [
+    args: ~w(css/app.sass ../priv/static/assets/app.css),
+    cd: Path.expand("../assets", __DIR__)
+  ]
+
 config :seed,
   namespace: Core,
   ecto_repos: [Core.Repo],

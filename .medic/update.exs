@@ -5,6 +5,7 @@
   :build_mix,
   # :build_npm,
   :doctor,
+  ["Install dart sass", "mix", ["sass.install", "--if-missing"]],
   :migrate
   # ["Seeding DB", "mix", ["run", "priv/repo/seeds.exs"]]
 ]
