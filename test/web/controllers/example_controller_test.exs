@@ -1,4 +1,6 @@
 defmodule Web.ExampleControllerTest do
+  # @related [subject](lib/web/controllers/example_controller.ex)
+  
   use Web.ConnCase
 
   test "GET /example", %{conn: conn} do
