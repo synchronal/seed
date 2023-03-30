@@ -14,10 +14,11 @@ defmodule Web.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", Web do
+  scope "/" do
     pipe_through :browser
 
-    get "/example", ExampleController, :index
+    live "/", Web.Live.Home
+    get "/status", Web.StatusController, :index
   end
 
   # Other scopes may use custom stacks.

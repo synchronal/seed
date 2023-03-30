@@ -51,8 +51,8 @@ defmodule Web do
 
   def live_view do
     quote do
-      use Phoenix.LiveView,
-        layout: {Web.Layouts, :app}
+      use Phoenix.LiveView, layout: {Web.Layouts, :app}
+      import Moar.Sugar
 
       unquote(html_helpers())
     end
