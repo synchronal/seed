@@ -1,4 +1,5 @@
 *.ez
+.elixir_ls
 .local
 .medic/.doctor.out
 .medic/skipped
