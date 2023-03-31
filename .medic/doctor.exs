@@ -8,6 +8,7 @@
   # {Medic.Checks.Direnv, :has_all_keys?},
   {Medic.Checks.Asdf, :plugin_installed?, ["postgres"]},
   {Medic.Checks.Asdf, :package_installed?, ["postgres"]},
+  {Local.Checks.Versions, :synchronized?},
   {Medic.Checks.Hex, :local_hex_installed?},
   {Medic.Checks.Hex, :local_rebar_installed?},
   {Medic.Checks.Hex, :packages_installed?},
