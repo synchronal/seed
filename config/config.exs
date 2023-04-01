@@ -15,9 +15,10 @@ config :dart_sass,
   ]
 
 config :seed,
-  namespace: Core,
+  app_title: "Seed",
   ecto_repos: [Core.Repo],
-  generators: [binary_id: true]
+  generators: [binary_id: true],
+  namespace: Core
 
 # Configures the endpoint
 config :seed, Web.Endpoint,

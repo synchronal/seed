@@ -17,6 +17,7 @@
 - Split `aliases` and `deps` functions in `mix.exs` into `:seed` and `:app` versions to hopefully reduce future
   merge conflicts.
 - Replaced Tailwind with SASS.
+- Added basic controller and liveview, plus tests.
 
 ## v0.1.0
 
