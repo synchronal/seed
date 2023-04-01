@@ -9,6 +9,7 @@
 /cover/
 /deps/
 /doc/
+/priv/plts
 /priv/postgres
 /priv/static/assets/
 /priv/static/cache_manifest.json

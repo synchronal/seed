@@ -8,6 +8,7 @@ defmodule Core.MixProject do
       aliases: aliases(:app) ++ aliases(:seed),
       app: :seed,
       deps: deps(:app) ++ deps(:seed),
+      dialyzer: dialyzer(),
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -72,6 +73,14 @@ defmodule Core.MixProject do
       {:swoosh, "~> 1.3"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"}
+    ]
+  end
+
+  def dialyzer do
+    [
+      plt_add_apps: [:ex_unit, :mix],
+      plt_add_deps: :app_tree,
+      plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
     ]
   end
 
