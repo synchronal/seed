@@ -1,6 +1,7 @@
 defmodule Web.Paths do
   use Web, :verified_routes
 
+  def home, do: ~p"/"
   def status, do: ~p"/status"
 
   def static(path), do: static_path(Web.Endpoint, Path.join("/", path))

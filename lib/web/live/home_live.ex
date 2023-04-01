@@ -1,10 +1,12 @@
-defmodule Web.Live.Home do
+defmodule Web.HomeLive do
+  # @related [test](/test/web/live/home_live_test.exs)
+
   use Web, :live_view
 
   @impl Phoenix.LiveView
   def render(assigns) do
     ~H"""
-    Home
+    <div test-role="message">hello world!</div>
     """
   end
 

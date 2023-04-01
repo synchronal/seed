@@ -35,4 +35,19 @@ defmodule Test.ConnCase do
     Test.DataCase.setup_sandbox(tags)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
+
+  setup %{conn: conn} = tags do
+    page_tid = Map.get(tags, :page)
+
+    cond do
+      page_tid in [nil, false] ->
+        []
+
+      page_tid == :logged_out ->
+        [pages: %{logged_out: Pages.new(conn)}]
+
+      page_tid ->
+        raise "Unhandled page_tid: #{page_tid}"
+    end
+  end
 end

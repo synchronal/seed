@@ -1,4 +1,4 @@
-defmodule Test.Pages.StatusController do
+defmodule Test.Pages.Status do
   import Moar.Assertions
   alias HtmlQuery, as: Hq
 

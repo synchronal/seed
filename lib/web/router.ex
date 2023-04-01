@@ -17,7 +17,7 @@ defmodule Web.Router do
   scope "/" do
     pipe_through :browser
 
-    live "/", Web.Live.Home
+    live "/", Web.HomeLive
     get "/status", Web.StatusController, :index
   end
 

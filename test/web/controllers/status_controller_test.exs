@@ -1,12 +1,12 @@
 defmodule Web.StatusControllerTest do
   # @related [subject](lib/web/controllers/status_controller.ex)
 
-  use Test.ConnCase
+  use Test.ConnCase, async: true
 
-  test "GET /status", %{conn: conn} do
-    conn
-    |> Pages.new()
-    |> Test.Pages.StatusController.visit()
-    |> Test.Pages.StatusController.assert_here()
+  @tag page: :logged_out
+  test "GET /status", %{pages: %{logged_out: page}} do
+    page
+    |> Test.Pages.Status.visit()
+    |> Test.Pages.Status.assert_here()
   end
 end
