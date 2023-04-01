@@ -1,18 +1,18 @@
-# Core
+# Synchronal Seed
 
-To start your Phoenix server:
+A base for a Phoenix LiveView app.
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+Includes:
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+* A sample controller: [Web.StatusController](lib/web/controllers/status_controller.ex)
+* A sample LiveView: [Web.HomeLive](lib/web/live/home_live.ex)
+* Controller and LiveView tests using [Pages](https://github.com/synchronal/pages) and
+  [HtmlQuery](https://github.com/synchronal/html_query/)
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+It embodies some of our current preferences for building LiveView apps:
+* Eschewing the usage of the application name as the root module, and instead using multiple root modules
+  such as `Core`, `Web`, and `Test`. (On some of our projects, there are also other root modules such as
+  `Etc` and `Extra`.)
+* Using [SASS](https://sass-lang.com) instead of Tailwind.
+* Using `@related` tags to jump between related files quickly (via
+  [related-files](https://github.com/synchronal/related-files)).
