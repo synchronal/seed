@@ -1,5 +1,5 @@
 [
-  # {Medic.Checks.Homebrew, :bundled?},
+  {Medic.Checks.Homebrew, :bundled?},
   # {Medic.Checks.Git, :uses_ssh?, ["github.com"]},
   # {Medic.Checks.Chromedriver, :chrome_installed??},
   # {Medic.Checks.Chromedriver, :unquarantined?},
@@ -20,5 +20,6 @@
   {Medic.Checks.Postgres, :correct_version_running?},
   {Medic.Checks.Postgres, :role_exists?},
   {Medic.Checks.Postgres, :correct_data_directory?, [remedy: "bin/dev/db-start"]},
-  {Medic.Checks.Postgres, :database_exists?, ["seed_dev"]}
+  {Medic.Checks.Postgres, :database_exists?, ["seed_dev"]},
+  {Medic.Checks.Hosts, :host_exists?, ["seed.local"]}
 ]
