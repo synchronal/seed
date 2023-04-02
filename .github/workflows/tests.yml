@@ -2,10 +2,10 @@ name: Test & Audit
 on:
   push:
     branches:
-      - main
+      - "*"
   pull_request:
     branches:
-      - main
+      - "*"
 env:
   ELIXIR_VERSION: "1.14.3"
   OTP_VERSION: "25.3"

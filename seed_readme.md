@@ -20,11 +20,17 @@ It embodies some of our current preferences for building LiveView apps:
 - On a dev computer, stores the Postgres data in the project directory (in `./priv/postgres`) and supports multiple
   versions of Postgres running simultaneously on the same dev computer.
 
+It also embodies some of our current preferences for CI and deploying:
+
+- Uses GitHub actions for running tests.
+- Passing builds are automatically deployed to staging on [Fly](https://fly.io).
+- A successful staging deploy will trigger a production deploy on Fly.
+
 ## Usage
 
 ### Creating a new project using `seed` as a base
 
-#### Create a new, empty git repo:
+Create a new, empty git repo:
 
 ```
 mkdir foo
@@ -32,7 +38,7 @@ cd foo
 git init .
 ```
 
-#### Set this repo as a remote, fetch it, and merge it:
+Set this repo as a remote, fetch it, and merge it:
 
 ```
 git remote add seed https://github.com/synchronal/seed.git
@@ -42,7 +48,7 @@ git merge seed/main
 
 You may get a few errors related to `envrc` but you can ignore them for now.
 
-#### Run doctor over and over until all issues are fixed:
+Run doctor over and over until all issues are fixed:
 
 ```
 bin/dev/doctor
@@ -50,18 +56,41 @@ bin/dev/doctor
 
 This will end up creating local databases called `seed_dev` and `seed_test` which you'll delete later.
 
-#### Run the tests:
+Run the tests:
 
 ```
 bin/dev/test
 ```
 
-#### Run Phoenix and view it in a browser:
+Run Phoenix and view it in a browser:
 
 ```
 bin/dev/start
 open "http://localhost:4000/"
 ```
+
+### Configuring deployments
+
+This section assumes you're deploying to [Fly](https://fly.io) via GitHub actions. Otherwise you're on your own :)
+
+Make sure you have a Fly org via `fly orgs list` and if not, create one via `fly orgs create`.
+
+Create Fly staging and prod apps if you haven't already, replacing `<projectname>` with your project name and
+`<orgname>` with your Fly org name.
+
+```
+fly apps create <projectname>-staging --org <orgname>
+fly apps create <projectname>-prod --org <orgname>
+```
+
+Replace the project name in `deploy.yml`:
+
+```
+sed -i '' -e 's/synchronal-seed/<projectname>/g' .github/workflows/deploy.yml
+```
+
+Get your Fly auth token with `fly auth token` and then add it as a repository secret named `FLY_API_TOKEN` on GitHub:
+https://github.com/<your-org>/<your-repo>/settings/secrets/actions
 
 ## Contributing
 

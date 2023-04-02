@@ -1,39 +1,39 @@
-# name: Deploy
-# on:
-#   workflow_run:
-#     workflows: [Test & Audit]
-#     types: [completed]
-#     branches: [main]
-#
-# concurrency: deployment
-#
-# env:
-#   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-#
-# jobs:
-#   deploy_staging:
-#     name: Deploy staging
-#     runs-on: ubuntu-latest
-#     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-#     steps:
-#       - run: |
-#           echo "Triggering event:"
-#           echo "$GITHUB_CONTEXT" | jq
-#         env:
-#           GITHUB_CONTEXT: ${{ toJson(github) }}
-#       - uses: actions/checkout@v3
-#         with:
-#           ref: ${{ github.event.workflow_run.head_sha }}
-#       - uses: superfly/flyctl-actions/setup-flyctl@master
-#       - run: flyctl deploy --remote-only --app yard-staging
-#   deploy_prod:
-#     name: Deploy prod
-#     needs: deploy_staging
-#     runs-on: ubuntu-latest
-#     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-#     steps:
-#       - uses: actions/checkout@v3
-#         with:
-#           ref: ${{ github.event.workflow_run.head_sha }}
-#       - uses: superfly/flyctl-actions/setup-flyctl@master
-#       - run: flyctl deploy --remote-only --app yard-prod
+name: Deploy
+on:
+  workflow_run:
+    workflows: [Test & Audit]
+    types: [completed]
+    branches: [main]
+
+concurrency: deployment
+
+env:
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+jobs:
+  deploy_staging:
+    name: Deploy staging
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - run: |
+          echo "Triggering event:"
+          echo "$GITHUB_CONTEXT" | jq
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only --app synchronal-seed-staging
+  deploy_prod:
+    name: Deploy prod
+    needs: deploy_staging
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only --app synchronal-seed-prod

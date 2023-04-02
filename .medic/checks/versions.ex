@@ -2,20 +2,14 @@ defmodule Local.Checks.Versions do
   defmodule Asdf do
     @path ".tool-versions"
 
-    def elixir do
-      version = extract("elixir", "elixir")
-      {@path, version, "elixir"}
-    end
+    def elixir,
+      do: {@path, extract("elixir", "elixir"), "elixir"}
 
-    def elixir_otp_major do
-      version = extract("elixir", "otp")
-      {@path, version, "elixir-otp-major"}
-    end
+    def elixir_otp_major,
+      do: {@path, extract("elixir", "otp"), "elixir-otp-major"}
 
-    def erlang do
-      version = extract("erlang")
-      {@path, version, "erlang"}
-    end
+    def erlang,
+      do: {@path, extract("erlang"), "erlang"}
 
     def erlang_major do
       version = extract("erlang")
@@ -26,10 +20,8 @@ defmodule Local.Checks.Versions do
     # # #
 
     defp extract("elixir", part) when part in ~w[elixir otp] do
-      version = extract("elixir")
-
       ~r/^(?<elixir>\d+\.\d+\.\d+)-otp-(?<otp>\d+).*/
-      |> Regex.named_captures(version)
+      |> Regex.named_captures(extract("elixir"))
       |> Map.get(part)
     end
 
@@ -45,18 +37,32 @@ defmodule Local.Checks.Versions do
     end
   end
 
+  defmodule Dockerfile do
+    @path "Dockerfile"
+
+    def elixir,
+      do: {@path, extract("ELIXIR_VERSION"), "elixir"}
+
+    def erlang,
+      do: {@path, extract("OTP_VERSION"), "erlang"}
+
+    # # #
+
+    defp extract(key) do
+      ~r/ARG #{key}=(?<version>[\d\.]+)/
+      |> Regex.named_captures(File.read!(@path))
+      |> Map.get("version")
+    end
+  end
+
   defmodule GithubTests do
     @path ".github/workflows/tests.yml"
 
-    def elixir do
-      version = extract("ELIXIR_VERSION")
-      {@path, version, "elixir"}
-    end
+    def elixir,
+      do: {@path, extract("ELIXIR_VERSION"), "elixir"}
 
-    def erlang do
-      version = extract("OTP_VERSION")
-      {@path, version, "erlang"}
-    end
+    def erlang,
+      do: {@path, extract("OTP_VERSION"), "erlang"}
 
     # # #
 
@@ -69,10 +75,14 @@ defmodule Local.Checks.Versions do
     end
   end
 
+  # # #
+
   def synchronized? do
     synchronized?([
+      {Asdf.elixir(), Dockerfile.elixir()},
       {Asdf.elixir(), GithubTests.elixir()},
       {Asdf.elixir_otp_major(), Asdf.erlang_major()},
+      {Asdf.erlang(), Dockerfile.erlang()},
       {Asdf.erlang(), GithubTests.erlang()}
     ])
   end
