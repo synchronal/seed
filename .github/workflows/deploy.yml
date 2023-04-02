@@ -3,7 +3,7 @@ on:
   workflow_run:
     workflows: [Test & Audit]
     types: [completed]
-    branches: ["v0.1.0"]
+    branches: [v0.1.0]
 
 concurrency: deployment
 
