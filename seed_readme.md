@@ -63,3 +63,24 @@ It embodies some of our current preferences for building LiveView apps:
     bin/dev/start
     open "http://localhost:4000/"
     ```
+
+## Contributing
+
+All commit messages must start with `[seed]` because these commits will become part of the project that is
+being written on top of Seed. For example:
+
+    ```
+    [seed] add example Ecto query
+    ```
+
+All work is done on version branches (e.g., `v0.1.0`). When the version is ready, its commits should be squashed
+and merged into main with the version number as the commit message subject and some description of the changes
+below. Like all other commits, the message must start with `[seed]`. For example:
+
+    ```
+    [seed] v1.2.3
+
+    - Added blah blah.
+    - Updated blah blah.
+    ```
+
