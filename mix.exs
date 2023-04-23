@@ -59,7 +59,7 @@ defmodule Core.MixProject do
       {:markdown_formatter, "~> 0.1", only: [:dev, :test], runtime: false},
       {:mix_audit, "~> 2.1", only: [:dev], runtime: false},
       {:mix_test_interactive, "~> 1.2", only: :dev, runtime: false},
-      {:moar, "~> 1.28"},
+      {:moar, "~> 1.36"},
       {:pages, "~> 0.11.1", only: :test},
       {:phoenix, "~> 1.7.1"},
       {:phoenix_ecto, "~> 4.4"},

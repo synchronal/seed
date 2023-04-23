@@ -1,128 +1,53 @@
 defmodule Local.Checks.Versions do
-  defmodule Asdf do
-    @path ".tool-versions"
+  def check(type: type, version: expected_version, in: locations) do
+    paths = %{
+      "asdf" => ".tool-versions",
+      "dockerfile" => "Dockerfile",
+      "github_tests" => ".github/workflows/tests.yml"
+    }
 
-    def elixir,
-      do: {@path, extract("elixir", "elixir"), "elixir"}
+    Enum.reduce_while(List.wrap(locations), :ok, fn location, :ok ->
+      actual_version = parse(location, paths[location], type)
 
-    def elixir_otp_major,
-      do: {@path, extract("elixir", "otp"), "elixir-otp-major"}
+      cond do
+        actual_version == nil ->
+          {:halt, {:error, "No version found for ‘#{type}’ in ‘#{location}’", "# Check ‘#{paths[location]}’"}}
 
-    def erlang,
-      do: {@path, extract("erlang"), "erlang"}
+        Moar.Version.compare(expected_version, actual_version) == :eq ->
+          {:cont, :ok}
 
-    def erlang_major do
-      version = extract("erlang")
-      [major | _rest] = String.split(version, ".")
-      {@path, major, "erlang-major"}
-    end
-
-    # # #
-
-    defp extract("elixir", part) when part in ~w[elixir otp] do
-      ~r/^(?<elixir>\d+\.\d+\.\d+)-otp-(?<otp>\d+).*/
-      |> Regex.named_captures(extract("elixir"))
-      |> Map.get(part)
-    end
-
-    defp extract(key) do
-      @path
-      |> File.read!()
-      |> String.split("\n", trim: true)
-      |> Map.new(fn line ->
-        [key, value] = String.split(line, " ", parts: 2)
-        {key, value}
-      end)
-      |> Map.get(key)
-    end
-  end
-
-  defmodule Dockerfile do
-    @path "Dockerfile"
-
-    def elixir,
-      do: {@path, extract("ELIXIR_VERSION"), "elixir"}
-
-    def erlang,
-      do: {@path, extract("OTP_VERSION"), "erlang"}
-
-    # # #
-
-    defp extract(key) do
-      ~r/ARG #{key}=(?<version>[\d\.]+)/
-      |> Regex.named_captures(File.read!(@path))
-      |> Map.get("version")
-    end
-  end
-
-  defmodule GithubTests do
-    @path ".github/workflows/tests.yml"
-
-    def elixir,
-      do: {@path, extract("ELIXIR_VERSION"), "elixir"}
-
-    def erlang,
-      do: {@path, extract("OTP_VERSION"), "erlang"}
-
-    # # #
-
-    defp extract(key) do
-      @path
-      |> File.read!()
-      |> YamlElixir.read_from_string!()
-      |> Map.get("env")
-      |> Map.get(key)
-    end
+        :else ->
+          message = "Expected ‘#{type}’ in ‘#{location}’ to be ‘#{expected_version}’ but was ‘#{actual_version}’"
+          {:halt, {:error, message, "# Check ‘#{paths[location]}’"}}
+      end
+    end)
   end
 
   # # #
 
-  def synchronized? do
-    synchronized?([
-      {Asdf.elixir(), Dockerfile.elixir()},
-      {Asdf.elixir(), GithubTests.elixir()},
-      {Asdf.elixir_otp_major(), Asdf.erlang_major()},
-      {Asdf.erlang(), Dockerfile.erlang()},
-      {Asdf.erlang(), GithubTests.erlang()}
-    ])
+  defp parse("asdf" = _location, path, type) when type in ["elixir", "otp"] do
+    regex = ~r/^elixir (?<elixir>\d+\.\d+\.\d+)-otp-(?<otp>\d+)$/m
+    path |> File.read!() |> Moar.Regex.named_capture(regex, type)
   end
 
-  def synchronized?([{left, right} | tail]) do
-    case check_version(left, right) do
-      :ok -> synchronized?(tail)
-      error -> error
-    end
+  defp parse("asdf" = _location, path, type) do
+    regex = ~r/^#{type} (?<version>[\d+\.]+)$/m
+    path |> File.read!() |> Moar.Regex.named_capture(regex, "version")
   end
 
-  def synchronized?([]) do
-    :ok
+  defp parse("dockerfile" = location, path, "erlang" = _type),
+    do: parse(location, path, "otp")
+
+  defp parse("dockerfile" = _location, path, type) do
+    regex = ~r/ARG #{String.upcase(type)}_VERSION=(?<version>[\d\.]+)/
+    path |> File.read!() |> Moar.Regex.named_capture(regex, "version")
   end
 
-  # # #
+  defp parse("github_tests" = location, path, "erlang" = _type),
+    do: parse(location, path, "otp")
 
-  defp check_version({source1, value1, type1}, {source2, value2, type2}) do
-    if compare_versions(value1, value2) == :eq do
-      :ok
-    else
-      {
-        :error,
-        """
-        Version mismatch:
-        - #{type1} version in “#{source1}” is “#{value1}”
-        - #{type2} version in “#{source2}” is “#{value2}”
-        """,
-        "# Check #{source1} and #{source2}."
-      }
-    end
-  end
-
-  defp compare_versions(left, right) do
-    Version.compare(maybe_fix_version(left), maybe_fix_version(right))
-  end
-
-  defp maybe_fix_version(string) do
-    parts = String.split(string, ".")
-    normalized = parts ++ List.duplicate("0", 3 - length(parts))
-    Enum.join(normalized, ".")
+  defp parse("github_tests" = _location, path, type) do
+    key = "#{String.upcase(type)}_VERSION"
+    path |> File.read!() |> YamlElixir.read_from_string!() |> get_in(["env", key])
   end
 end

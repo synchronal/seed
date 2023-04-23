@@ -9,6 +9,7 @@ on:
 env:
   ELIXIR_VERSION: "1.14.3"
   OTP_VERSION: "25.3"
+  POSTGRES_VERSION: "14.6"
 jobs:
   build_test:
     name: Build Test
@@ -81,7 +82,7 @@ jobs:
       FROM_EMAIL_ADDRESS: "test@example.com"
     services:
       postgres:
-        image: postgres:14.6-alpine
+        image: postgres:${{ env.POSTGRES_VERSION }}-alpine
         env:
           POSTGRES_PASSWORD: postgres
           POSTGRES_USER: postgres
