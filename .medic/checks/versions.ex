@@ -46,8 +46,17 @@ defmodule Local.Checks.Versions do
   defp parse("github_tests" = location, path, "erlang" = _type),
     do: parse(location, path, "otp")
 
+  defp parse("github_tests" = _location, path, "postgres" = _type) do
+    regex = ~r/postgres:(?<version>.*)-alpine/
+    keys = ["jobs", "test", "services", "postgres", "image"]
+    path |> get_in_yaml(keys) |> Moar.Regex.named_capture(regex, "version")
+  end
+
   defp parse("github_tests" = _location, path, type) do
     key = "#{String.upcase(type)}_VERSION"
     path |> File.read!() |> YamlElixir.read_from_string!() |> get_in(["env", key])
   end
+
+  defp get_in_yaml(path, keys),
+    do: path |> YamlElixir.read_from_file!() |> get_in(keys)
 end
