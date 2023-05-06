@@ -54,7 +54,7 @@ defmodule Local.Checks.Versions do
 
   defp parse("github_tests" = _location, path, type) do
     key = "#{String.upcase(type)}_VERSION"
-    path |> File.read!() |> YamlElixir.read_from_string!() |> get_in(["env", key])
+    path |> get_in_yaml(["env", key])
   end
 
   defp get_in_yaml(path, keys),
