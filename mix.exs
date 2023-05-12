@@ -47,6 +47,7 @@ defmodule Core.MixProject do
 
   defp deps(:seed) do
     [
+      {:boundary, "~> 0.9.4", runtime: false},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:dart_sass, "~> 0.5"},
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
