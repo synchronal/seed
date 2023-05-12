@@ -8,8 +8,9 @@ source ".medic/_support/doctor.sh"
 
 check "Check formatting" "bin/dev/format --check" "bin/dev/format --all"
 step "Auditing Elixir deps" "mix deps.audit"
-step "Credo" "mix credo --strict"
-step "Dialyzer" "mix dialyzer"
+step "Checking code style" "mix credo --strict"
+step "Checking types" "mix dialyzer"
+step "Checking security" "mix sobelow --config .sobelow-conf"
 check "Checking for unused deps" "mix deps.unlock --check-unused" "mix deps.clean --unused --unlock"
 
 check "Validating commit messages" \

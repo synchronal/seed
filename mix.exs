@@ -72,6 +72,7 @@ defmodule Core.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:postgrex, ">= 0.0.0"},
       {:schema_assertions, "~> 0.1", only: [:dev, :test]},
+      {:sobelow, "~> 0.12", only: [:dev, :test], runtime: false},
       {:swoosh, "~> 1.3"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"}
