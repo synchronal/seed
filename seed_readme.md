@@ -1,6 +1,9 @@
 # Synchronal Seed
 
-A base for a Phoenix LiveView app.
+A base for a Phoenix LiveView app. It is meant to be set up as a git remote to a Phoenix app, so that as your Seed-based
+project matures, changes to Seed can be optionally merged in from the remote. As your Seed-based project matures, it
+will naturally diverge from what's in the Seed repo, and merging in from the remote may get more difficult. At that
+point, it might be more useful to just read the code changes and apply any interesting changes via copy & paste.
 
 Includes:
 
@@ -25,6 +28,8 @@ It also embodies some of our current preferences for CI and deploying:
 - Uses GitHub actions for running tests.
 - Passing builds are automatically deployed to staging on [Fly](https://fly.io).
 - A successful staging deploy will trigger a production deploy on Fly.
+
+Remember that this is just starter code, and you can change any of these preferences after creating your project.
 
 ## Usage
 
@@ -68,6 +73,37 @@ Run Phoenix and view it in a browser:
 bin/dev/start
 open "http://localhost:4000/"
 ```
+
+### Day-to-day development of a Seed-based project
+
+This project includes [Medic](https://github.com/synchronal/medic) which is a collection of development lifecycle
+scripts. Medic was designed to be used with trunk-based development, where most work is done on the main branch, and
+it's rare to have other branches). Trunk-based development speeds up development by removing the cascading delays
+brought on by code reviews and by the conflicts and hidden code inherent with long-lived branches.
+
+Instead of `git pull` or `git merge`, use `bin/dev/update` and instead of `git push`, use `bin/dev/shipit`.
+
+`bin/dev/update` does the following by default:
+
+- updates code
+- updates dependencies
+- compiles
+- runs doctor to make sure your local dev environment is set up correctly after merging changes that might affect it
+- runs migrations
+
+`bin/dev/shipit` does the following by default:
+
+- audits the code for proper formatting, code quality, unused dependencies, etc
+- runs `bin/dev/update`
+- runs tests
+
+The typical workflow is:
+
+- run `bin/dev/update` to pull code from origin
+- run `bin/dev/start` to run the server
+- write code & run tests
+- commit
+- run `bin/dev/shipit` to run all checks and push to origin
 
 ### Configuring deployments
 
