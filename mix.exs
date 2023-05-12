@@ -7,6 +7,7 @@ defmodule Core.MixProject do
     [
       aliases: aliases(:app) ++ aliases(:seed),
       app: :seed,
+      compilers: [:boundary] ++ Mix.compilers(),
       deps: deps(:app) ++ deps(:seed),
       dialyzer: dialyzer(),
       elixir: "~> 1.14",

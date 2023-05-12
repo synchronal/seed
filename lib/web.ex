@@ -17,7 +17,7 @@ defmodule Web do
   those modules here.
   """
 
-  use Boundary
+  use Boundary, deps: [Core], exports: [Endpoint, Paths]
 
   def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)
 

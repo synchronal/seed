@@ -3,5 +3,5 @@ defmodule Core do
   Root module for application logic and data.
   """
 
-  use Boundary
+  use Boundary, deps: [], exports: [Metrics]
 end

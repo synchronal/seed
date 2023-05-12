@@ -10,5 +10,6 @@ defmodule Web.HomeLiveTest do
     |> Test.Pages.Home.visit()
     |> Test.Pages.Home.assert_here()
     |> Test.Pages.Home.assert_message("hello world!")
+    |> Test.Pages.Home.assert_visits(:gte, 10)
   end
 end
