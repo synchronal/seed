@@ -7,8 +7,8 @@ on:
     branches:
       - "*"
 env:
-  ELIXIR_VERSION: "1.14.4"
-  OTP_VERSION: "25.3.1"
+  ELIXIR_VERSION: "1.14.5"
+  OTP_VERSION: "25.3.2"
 jobs:
   build_test:
     name: Build Test
@@ -81,7 +81,7 @@ jobs:
       FROM_EMAIL_ADDRESS: "test@example.com"
     services:
       postgres:
-        image: postgres:14.6-alpine
+        image: postgres:14.7-alpine
         env:
           POSTGRES_PASSWORD: postgres
           POSTGRES_USER: postgres

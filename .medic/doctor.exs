@@ -1,8 +1,8 @@
 [
-  {Local.Checks.Versions, :check, [type: "elixir", version: "1.14.4", in: ["asdf", "dockerfile", "github_tests"]]},
+  {Local.Checks.Versions, :check, [type: "elixir", version: "1.14.5", in: ["asdf", "dockerfile", "github_tests"]]},
   {Local.Checks.Versions, :check, [type: "otp", version: "25", in: ["asdf"]]},
-  {Local.Checks.Versions, :check, [type: "erlang", version: "25.3.1", in: ["asdf", "dockerfile", "github_tests"]]},
-  {Local.Checks.Versions, :check, [type: "postgres", version: "14.6", in: ["asdf", "github_tests"]]},
+  {Local.Checks.Versions, :check, [type: "erlang", version: "25.3.2", in: ["asdf", "dockerfile", "github_tests"]]},
+  {Local.Checks.Versions, :check, [type: "postgres", version: "14.7", in: ["asdf", "github_tests"]]},
   {Medic.Checks.Homebrew, :bundled?},
   # {Medic.Checks.Git, :uses_ssh?, ["github.com"]},
   # {Medic.Checks.Chromedriver, :chrome_installed??},
