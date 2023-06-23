@@ -53,13 +53,26 @@ git merge seed/main
 
 You may get a few errors related to `envrc` but you can ignore them for now.
 
+Replace the first two lines of README.md with something specific for your project.
+
+Remove the "Validating commit messages" step of `bin/dev/audit` because it's only meant for Seed development.
+
+Replace the `:seed` app name with your own by running the following on the command line, changing "my-org" to your org
+name, and "my-app" to your app name:
+
+```
+APP=my-app ORG=my-org LC_ALL=C find . -type f -exec sed -i '' \
+  -e "s/:seed/:$APP/g" \
+  -e "s/seed_dev/$APP_dev/g" \
+  -e "s/seed_test/$APP_test/g" \
+  -e "s/synchronal-seed/$ORG-$APP/g" {} +
+```
+
 Run doctor over and over until all issues are fixed:
 
 ```
 bin/dev/doctor
 ```
-
-This will end up creating local databases called `seed_dev` and `seed_test` which you'll delete later.
 
 Run the tests:
 
@@ -76,57 +89,7 @@ open "http://localhost:4000/"
 
 ### Day-to-day development of a Seed-based project
 
-This project includes [Medic](https://github.com/synchronal/medic) which is a collection of development lifecycle
-scripts. Medic was designed to be used with trunk-based development, where most work is done on the main branch, and
-it's rare to have other branches). Trunk-based development speeds up development by removing the cascading delays
-brought on by code reviews and by the conflicts and hidden code inherent with long-lived branches.
-
-Instead of `git pull` or `git merge`, use `bin/dev/update` and instead of `git push`, use `bin/dev/shipit`.
-
-`bin/dev/update` does the following by default:
-
-- updates code
-- updates dependencies
-- compiles
-- runs doctor to make sure your local dev environment is set up correctly after merging changes that might affect it
-- runs migrations
-
-`bin/dev/shipit` does the following by default:
-
-- audits the code for proper formatting, code quality, unused dependencies, etc
-- runs `bin/dev/update`
-- runs tests
-
-The typical workflow is:
-
-- run `bin/dev/update` to pull code from origin
-- run `bin/dev/start` to run the server
-- write code & run tests
-- commit
-- run `bin/dev/shipit` to run all checks and push to origin
-
-### Configuring deployments
-
-This section assumes you're deploying to [Fly](https://fly.io) via GitHub actions. Otherwise you're on your own :)
-
-Make sure you have a Fly org via `fly orgs list` and if not, create one via `fly orgs create`.
-
-Create Fly staging and prod apps if you haven't already, replacing `<projectname>` with your project name and
-`<orgname>` with your Fly org name.
-
-```
-fly apps create <projectname>-staging --org <orgname>
-fly apps create <projectname>-prod --org <orgname>
-```
-
-Replace the project name in `deploy.yml`:
-
-```
-sed -i '' -e 's/synchronal-seed/<projectname>/g' .github/workflows/deploy.yml
-```
-
-Get your Fly auth token with `fly auth token` and then add it as a repository secret named `FLY_API_TOKEN` on GitHub:
-https://github.com/<your-org>/<your-repo>/settings/secrets/actions
+See README.md for day-to-day development instructions.
 
 ## Contributing
 
