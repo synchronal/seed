@@ -1,6 +1,7 @@
 # Seed
 
-A base for a Phoenix LiveView app. Read more in [seed_readme.md](./seed_readme.md).
+A base for a Phoenix LiveView app. To use Seed as a base for your new project, see [seed_readme.md](./seed_readme.md).
+Once you create your project using Seed, delete this paragraph from the README in your repo.
 
 ## Setting up the project on a dev machine
 
