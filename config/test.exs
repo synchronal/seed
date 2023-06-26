@@ -29,4 +29,5 @@ config :seed, Core.Mailer, adapter: Swoosh.Adapters.Test
 config :logger, level: :warning
 config :pages, :phoenix_endpoint, Web.Endpoint
 config :phoenix, :plug_init_mode, :runtime
+config :schema_assertions, :ecto_repos, [Core.Repo]
 config :swoosh, :api_client, false

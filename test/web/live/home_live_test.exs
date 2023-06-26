@@ -6,10 +6,12 @@ defmodule Web.HomeLiveTest do
 
   @tag page: :logged_out
   test "says 'hello world'", %{pages: %{logged_out: page}} do
+    visits_from_setup = Core.Metrics.visits()
+
     page
     |> Test.Pages.Home.visit()
     |> Test.Pages.Home.assert_here()
     |> Test.Pages.Home.assert_message("hello world!")
-    |> Test.Pages.Home.assert_visits(:gte, 10)
+    |> Test.Pages.Home.assert_visits(visits_from_setup + 1)
   end
 end

@@ -23,6 +23,9 @@ defmodule Test.DataCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
+      import Moar.Assertions
+      import Moar.Enum, only: [tids: 1]
+      import SchemaAssertions
       import Test.DataCase
     end
   end

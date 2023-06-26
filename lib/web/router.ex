@@ -2,6 +2,7 @@ defmodule Web.Router do
   use Web, :router
 
   pipeline :browser do
+    plug :record_visit
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
@@ -41,5 +42,14 @@ defmodule Web.Router do
       live_dashboard "/dashboard", metrics: Web.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
+  end
+
+  defp record_visit(conn, _opts) do
+    register_before_send(conn, fn conn ->
+      if conn.status == 200,
+        do: Core.Metrics.record_visit!("/" <> Enum.join(conn.path_info, "/"))
+
+      conn
+    end)
   end
 end
